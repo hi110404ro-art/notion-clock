@@ -9,9 +9,9 @@
     html, body {
       margin: 0;
       height: 100%;
-      background: transparent; /* Notion埋め込み用に透過 */
+      background: transparent;
       font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
-      color: #ffffff; /* 文字色 */
+      color: #ffffff;
     }
 
     .wrap {
@@ -22,14 +22,16 @@
       box-sizing: border-box;
     }
 
-    /* これが見える化の肝：半透明パネル */
+    /* パネル：幅を固定して伸び縮みを止める */
     .panel{
-      display: inline-block;
+      width: 360px;              /* ←ここで固定（好みで調整） */
       padding: 18px 22px;
       border-radius: 18px;
       background: rgba(0,0,0,0.38);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
+      box-sizing: border-box;
+      text-align: center;
     }
 
     .day {
@@ -45,11 +47,18 @@
       opacity: 0.85;
     }
 
+    /* 時刻：等幅フォント＋数字の幅を固定（これが一番効きます） */
     .time {
       margin-top: 10px;
       font-size: 56px;
       font-weight: 800;
       line-height: 1;
+
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
     }
 
     .quote {
@@ -59,12 +68,18 @@
       font-style: italic;
       text-align: center;
     }
+
+    /* 画面が狭いときに崩れないように */
+    @media (max-width: 420px){
+      .panel{ width: 320px; }
+      .time{ font-size: 50px; }
+    }
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <div class="panel" style="text-align:center">
+    <div class="panel">
       <div class="day" id="day">WEDNESDAY</div>
       <div class="date" id="date">February 18, 2026</div>
       <div class="time" id="time">14:10:37</div>
